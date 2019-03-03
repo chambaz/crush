@@ -1,0 +1,22 @@
+{
+  "name": "crush",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Digital Surgeons",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/core": "~10.0.7",
+    "@emotion/styled": "~10.0.7",
+    "animejs": "~3.0.1",
+    "axios": "~0.18.0",
+    "next": "~8.0.3",
+    "react": "~16.8.3",
+    "react-dom": "~16.8.3",
+    "scratchie": "~1.0.1-0"
+  }
+}

@@ -15,7 +15,8 @@ const Page = styled.div({
   top: 0,
   left: 0,
   background: 'black',
-  fontFamily: 'Menlo'
+  fontFamily: 'Menlo',
+  overflow: 'hidden'
 })
 
 const Intro = styled.p(props => ({
@@ -45,14 +46,17 @@ const Blob = styled.svg({
   mixBlendMode: 'overlay'
 })
 
-const Video = styled.video({
+const Video = styled.video(props => ({
   position: 'absolute',
   top: 0,
   left: 0,
   width: '100vw',
   height: '100vh',
-  objectFit: 'cover'
-})
+  objectFit: 'cover',
+  filter: `hue-rotate(${props.currentHue}deg)`,
+  opacity: props.opacity,
+  transition: '1s'
+}))
 
 function Home() {
   const [rotation, seRotation] = useState({})
@@ -72,7 +76,12 @@ function Home() {
 
   // play audio and pipe through WebAudio analyzer node
   function play() {
-    const context = new webkitAudioContext()
+    if (playing) {
+      return
+    }
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext
+    const context = new AudioContext()
     const source = context.createBufferSource()
     const analyzer = context.createAnalyser()
 
@@ -189,9 +198,10 @@ function Home() {
         src="/static/bg.mp4"
         type="video/mp4"
         ref={video}
-        style={{ filter: `hue-rotate(${currentHue}deg)` }}
+        currentHue={currentHue}
+        opacity={playing ? 1 : 0}
       />
-      <div>
+      <div style={{ height: '100vh' }}>
         <Intro display={playing ? 'none' : 'block'}>
           {loading ? 'Loading...' : 'Tap to start'}
         </Intro>
